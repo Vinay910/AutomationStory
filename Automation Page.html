@@ -1,0 +1,125 @@
+
+<html>
+    <head>
+            <meta charset="utf-8" />
+        </head>
+        <body>
+             <h1>Enter user story name that need to be created in Automation Rapid Board</h1>
+             <h2>Please make sure to enter all required information for your user story is present </h2>
+               <h4>Team Name<span style="font-weight: bold;color:red">*</span></h4>
+                <select id="teamSelection" onchange=updateAssignee(this.value)>
+					<option value=""> -- Select -- </option>
+                    <option value="468467">Fluid Requisition</option>
+                    <option value="468472">Fluid Offer</option>
+                    <option value="468468">Fluid Posting</option>
+                    <option value="468489">Fluid Advanced Search</option>
+                </select>
+               <h4>Story<span style="font-weight: bold;color:red">*</span></h4>
+                <input name="summary" id="summary" type="text" size="70"> 
+                <br>
+                (In the format :- "TEC-23123 Undertaking Keyword and Conceptual Searches")
+                <h4>Testcase Name<span style="font-weight: bold;color:red">*</span></h4>
+                <input name="testcase" id="testcase" type="text" size="70"> 
+                <h4>ALM ID<span style="font-weight: bold;color:red">*</span></h4>
+                <input name="alm" id="alm" type="text" size="70"> 
+                <h4>Automation Priority<span style="font-weight: bold;color:red">*</span></h4>
+                    <select id="PR" >
+                        <option value="1-High">High</option>
+                        <option value="2-Medium">Medium</option>
+                        <option value="3-Low">Low</option>
+                        </select>
+                <h4>Reporter email ID:<span style="font-weight: bold;color:red">*</span></h4>
+                <input name="reporter" id="reporter" type="text" size="50"> 
+                <h4>Automation Scope<span style="font-weight: bold;color:red">*</span></h4>
+                <select id="automationScope" onchange="VisibilityCheck(this.value)">
+                    <option value="All">All Steps</option>
+                    <option value="Partial">Partial</option>
+                </select>
+                <br>
+                <br>
+                <div id="ifYes" style="display:none">
+                    <h4>Have you highligted the partial steps in ALM<span style="font-weight: bold;color:red">*</span></h4>
+                    <select id="highligted">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select> 
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                <br>
+                <input type="button" value="Click to Create a new Request" onclick=createJira()>
+
+               <input name="assignee" id="assignee" type="hidden"> 
+            <script type="text/javascript">
+            var description;
+         function VisibilityCheck(val)
+                {
+                if (val==="Partial") {
+                    ifYes.style.display='inline-block';
+                    description = "Story:- "+document.getElementById("summary").value+"%0D%0A"+"Test Case Name:- "+document.getElementById("testcase").value+"%0D%0A"+"ALM ID:- "+document.getElementById("alm").value+"%0D%0A"+"Automation Priority:- "+document.getElementById("PR").value+"%0D%0A"+"Automation Scope :- Partial"+"%0D%0A"+"Partial Steps Highlighted in ALM:- "+document.getElementById("highligted").value;
+                } 
+                else
+                {
+                    ifYes.style.display='none';
+                    description = "Story:- "+document.getElementById("summary").value+"%0D%0A"+"Test Case Name:- "+document.getElementById("testcase").value+"%0D%0A"+"ALM ID:- "+document.getElementById("alm").value+"%0D%0A"+"Automation Priority:- "+document.getElementById("PR").value+"%0D%0A"+"Automation Scope :- All Steps";
+                }
+                }
+                function createJira() 
+                {
+					var validationSuccess = true;
+					var team = document.getElementById("teamSelection");
+					var teamId = team.options[team.selectedIndex].value;
+					var summary = document.getElementById("summary").value;
+					var reporter = document.getElementById("reporter").value;
+					var sprint=document.getElementById("teamSelection").value;
+					var testcase = document.getElementById("testcase").value;
+					var almId = document.getElementById("alm").value;
+					var assignee = document.getElementById("assignee").value;
+					if(null===teamId || "" === teamId){
+						validationSuccess = false;
+						alert("Please select the team name")
+					} else if(null===summary || "" === summary){
+						validationSuccess = false;
+						alert("Please enter Story name")
+					} else if(null===testcase || "" === testcase){
+						validationSuccess = false;
+						alert("Please enter Test Case name")
+					} else if(null===almId || "" === almId){
+						validationSuccess = false;
+						alert("Please enter ALM ID")
+					} else if(null===reporter || "" === reporter){
+						validationSuccess = false;
+						alert("Please enter reporter email id")
+					}
+					if (validationSuccess === true){
+						//var description = "Story:- "+summary+"%0D%0A"+"Test Case Name:- "+testcase+"%0D%0A"+"ALM ID:- "+almId+"%0D%0A"+"Automation Priority:- "+document.getElementById("PR").value;
+
+						window.open("https://jira.oraclecorp.com/jira/secure/CreateIssueDetails!init.jspa?pid=18621&issuetype=7&summary="+summary+"&reporter="+reporter+"&assignee="+assignee+"&description="+description+"&priority=3&labels=jithna&customfield_10013="+sprint);
+					}
+                }  
+				
+				function updateAssignee(team)
+				{
+					var assignee = document.getElementById("assignee");
+					if (team==="468467") 
+					{
+						assignee.value= "dileep.karuvan@oracle.com"
+					} 
+					else if (team==="468472") 
+					{
+						 assignee.value= "jithna.chiravalappil@oracle.com"
+					}
+					else if (team==="468468") 
+					{
+						 assignee.value= "jithesh.pillai@oracle.com"
+					}
+					else if (team==="468489") 
+					{
+						 assignee.value= "jithna.chiravalappil@oracle.com"
+					}
+				}
+            </script>
+         </body>
+                
+</html>
